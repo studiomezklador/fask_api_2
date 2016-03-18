@@ -2,7 +2,7 @@
 from flask import url_for
 from flask.ext.script import Manager
 
-from __init__ import app
+from __init__ import app, basedir, root, versions, blueprints, directories
 
 
 manager = Manager(app)
@@ -12,6 +12,15 @@ manager = Manager(app)
 def hello():
     """ JUST FOR TEST """
     print("hello!")
+
+
+@manager.command
+def paths():
+    print("basedir: {}".format(basedir))
+    print("root: {}".format(root))
+    print("versions: {}".format(versions))
+    print("directories: {}".format(directories))
+    print("blueprints: {}".format(blueprints))
 
 
 @manager.command

@@ -1,0 +1,7 @@
+env/*
+__pycache__/*
+misc/config/*
+storage/*
+v1/__pycache__/*
+v1/auth/__pycache__/*
+v1/auth/models/__pycache__/*
