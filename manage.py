@@ -2,7 +2,8 @@
 from flask import url_for
 from flask.ext.script import Manager
 
-from __init__ import app, basedir, root, versions, blueprints, directories
+from __init__ import app
+from apicore.scandirs import basedir, root, versions, blueprints, directories
 
 
 manager = Manager(app)
@@ -16,11 +17,12 @@ def hello():
 
 @manager.command
 def paths():
-    print("basedir: {}".format(basedir))
-    print("root: {}".format(root))
-    print("versions: {}".format(versions))
-    print("directories: {}".format(directories))
-    print("blueprints: {}".format(blueprints))
+    print("basedir: {}".format(basedir),
+          "root: {}".format(root),
+          "versions: {}".format(versions),
+          "directories: {}".format(directories),
+          "blueprints: {}".format(blueprints),
+          sep='\n\n')
 
 
 @manager.command
