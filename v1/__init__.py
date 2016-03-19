@@ -35,7 +35,9 @@ def index():
     """
     if g.client['browser'] is None or g.client['platform'] is None:
         string = "hello from API {} -- in CLI Mode"
-        msg = {'message': string.format(versions[0]), 'status': 200}
+        msg = {'message': string.format(versions[0]),
+               'status': 'OK',
+               'mode': 200}
         r = Response(json.dumps(msg))
         r.headers['Content-type'] = 'application/json; charset=utf-8'
         return r, 200
