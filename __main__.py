@@ -1,20 +1,21 @@
 import os
-import sys
+# import sys
 from __init__ import app
 from apicore.scandirs import basedir, root, versions, blueprints
 from flask.ext.sqlalchemy import SQLAlchemy
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(root['storage'], 'dev.db')
-app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(
+    root['storage'],
+    'dev.db')
 
 db = SQLAlchemy(app)
 
 """
-NOTE: have to make a file autoloader to get views from all subdirectories in each version number
+NOTE: have to make a file autoloader to get views from all subdirectories
+in each version number
 """
 
-# a working example
+# a working example, BUT static! (need to be more dynamic...)
 from v1 import api as api_1_blueprint
 app.register_blueprint(api_1_blueprint, url_prefix='/v1')
 

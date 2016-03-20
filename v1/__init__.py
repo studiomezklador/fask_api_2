@@ -4,6 +4,7 @@ from apicore.scandirs import basedir, root, versions, blueprints
 from apicore.jsonmatter import Json
 
 api = Blueprint('api', __name__)
+
 from . import routes
 from v1.auth import views, errors
 # from v1.auth.models import User
