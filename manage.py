@@ -39,6 +39,9 @@ def routes():
                 line = [rule.endpoint, methods, rule]
                 output.append(line)
 
+    """
+    Great tool: tabulate module (from pyPy)
+    """
     print('\n')
     print(tabulate(output, headers=['ENDPOINT', 'METHODS', 'URI']), end='\n\n')
 
