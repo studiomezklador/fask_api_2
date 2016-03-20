@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from tabulate import tabulate
 from flask import url_for
 from flask.ext.script import Manager
 
@@ -27,24 +28,58 @@ def paths():
 
 @manager.command
 def routes():
-    """ Not Working """
+
     import urllib
     output = []
-    for rule in app.url_map.iter_rules():
-        options = []
-        for arg in rule.arguments:
-            options.append("[{0}]".format(arg))
+    longuest_meth = []
 
-        print(options)
-        methods = ', '.join(rule.methods)
-        url = url_for(rule.endpoint, **options)
-        line = urllib.parse.unquote("{:50s} {:20s} {}".format(rule.endpoint,
-                                                              methods, url))
-        output.append(line)
+    for v in versions:
 
+        for rule in app.url_map.iter_rules():
+            methods = ', '.join(rule.methods)
+
+            out = "{:<20s}|{:<10s}|{:<20s}"
+            if rule.endpoint != 'static':
+                """line = urllib.parse.unquote(out).format(rule.endpoint,
+                                                        methods,
+                                                        str(rule))"""
+                line = [rule.endpoint, methods, rule]
+                output.append(line)
+                longuest_meth.append(len(methods))
+    print('\n')
+    print(tabulate(output, headers=['ENDPOINT', 'METHODS', 'URI']), end='\n\n')
+
+    """meth_str = 'METHODS' + ' ' * min(longuest_meth)
+    print("{:<20} {:<10s} {:<20s}".format('ENDPOINT',
+                                          meth_str,
+                                          'RULE'))
+    print(sorted(longuest_meth, reverse=True))
     for line in sorted(output):
-        print(line)
+        print(line)"""
 
+
+@manager.command
+def bp():
+    print(blueprints(), sep='\n')
+
+def blueprints():
+    p = []
+    for k, v in app.blueprints.items():
+        # vars: get all attributes from class / instance
+        p.append(vars(v))
+    return p
+
+
+@manager.command
+def config():
+    print(app.config)
+    """for k, v in app.config.__dict__:
+        print("{}: {}".format(k, v), sep='\n')"""
+
+
+@manager.command
+def root():
+    print(app.config.__dict__['root_path'])
 
 if __name__ == '__main__':
     manager.run()
