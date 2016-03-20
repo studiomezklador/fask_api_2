@@ -1,5 +1,6 @@
 env/*
 __pycache__/*
+apicore/__pycache__/*
 misc/config/*
 storage/*
 v1/__pycache__/*
