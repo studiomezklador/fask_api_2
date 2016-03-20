@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from tabulate import tabulate
-from flask import url_for
+# from flask import url_for
 from flask.ext.script import Manager
 
 from __init__ import app
@@ -28,41 +28,27 @@ def paths():
 
 @manager.command
 def routes():
-
-    import urllib
     output = []
-    longuest_meth = []
 
     for v in versions:
 
         for rule in app.url_map.iter_rules():
             methods = ', '.join(rule.methods)
 
-            out = "{:<20s}|{:<10s}|{:<20s}"
             if rule.endpoint != 'static':
-                """line = urllib.parse.unquote(out).format(rule.endpoint,
-                                                        methods,
-                                                        str(rule))"""
                 line = [rule.endpoint, methods, rule]
                 output.append(line)
-                longuest_meth.append(len(methods))
+
     print('\n')
     print(tabulate(output, headers=['ENDPOINT', 'METHODS', 'URI']), end='\n\n')
-
-    """meth_str = 'METHODS' + ' ' * min(longuest_meth)
-    print("{:<20} {:<10s} {:<20s}".format('ENDPOINT',
-                                          meth_str,
-                                          'RULE'))
-    print(sorted(longuest_meth, reverse=True))
-    for line in sorted(output):
-        print(line)"""
 
 
 @manager.command
 def bp():
-    print(blueprints(), sep='\n')
+    print(fl_blueprints(), sep='\n')
 
-def blueprints():
+
+def fl_blueprints():
     p = []
     for k, v in app.blueprints.items():
         # vars: get all attributes from class / instance
@@ -78,7 +64,7 @@ def config():
 
 
 @manager.command
-def root():
+def fl_root():
     print(app.config.__dict__['root_path'])
 
 if __name__ == '__main__':
